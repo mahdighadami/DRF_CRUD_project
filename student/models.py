@@ -2,7 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
-class student(models.Model):
+class Student(models.Model):
     SEX_CHOICES = (
         ('m', 'male'),
         ('f', 'female'),
