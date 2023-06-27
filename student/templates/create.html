@@ -1,6 +1,6 @@
 
 {% if not created %}
-<div id="registerDiv" style="padding: 35%; margin-top: -30%; text-align: center;">
+<div style="padding: 35%; margin-top: -30%; text-align: center;">
     <form action="create" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -22,7 +22,7 @@
     </form>
 </div>
 {% else %}
-<div id="registerDiv" style="padding: 35%; margin-top: -30%; text-align: center;">
+<div style="padding: 35%; margin-top: -30%; text-align: center;">
     <p>thanks; your ID is: {{ id }}</p> 
 </div>
  
