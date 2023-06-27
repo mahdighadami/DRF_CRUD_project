@@ -2,16 +2,22 @@ from django.shortcuts import render
 from .models import Student
 from .forms import StudentForm
 
-# Create your views here.
+# Home Page:
 def home(request):
     return render(request, "home.html")
 
+
+# Create a new entity:
 def create(request):
+
     context = {}
     if request.method == "POST":
+
         form = StudentForm(request.POST)
-        print(dir(request.POST))
+
         if form.is_valid():
+
+            # Recieve data from form:
             first_name = request.POST.get("first_name")
             last_name = request.POST.get("last_name")
             sex = request.POST.get("sex")
@@ -23,7 +29,7 @@ def create(request):
             phone = request.POST.get("phone")
             date = request.POST.get("date")
 
-
+            # Make model and save it:
             new_student = Student.objects.create(
                 first_name = first_name,
                 last_name = last_name,
@@ -37,28 +43,28 @@ def create(request):
             )
             new_student.save()
             id = new_student.id
-            # context['created'] = True
-            # dict = {
-            #     'date' : date,
-            #     'grade' : grade,
-            #     'graduation_date' : graduation_date,
-            #     'username': 1234,   
-            #     'created': context['created']
-            # }
+            
+
             context['created'] = True
             context['id'] = id
             context['form'] = form
             return render(request, "create.html",  context = context)
+        
+        # If the form is not valid:
         else:
             context['created'] = False
             context['form'] = form
             return render(request, "create.html", context = context)
 
+    # When you come with GET:
     else:
         form = StudentForm()
         context['created'] = False
         context['form'] = form
     return render(request, "create.html", context = context)
 
+
+
+# Retrive student's data:
 def read(request):
-    pass
+    
