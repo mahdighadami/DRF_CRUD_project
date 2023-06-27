@@ -8,6 +8,9 @@
 
 <!--show student data-->
 <div style="padding-left: 20%; padding-right: 20%; margin-top: 10%; text-align: center; ">
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
     <table>
         <tr>
             {% for field in fields %}
@@ -38,6 +41,7 @@
     <div id="deleteDiv" style="display: none;">
         Are you sure about deleting the student"{{student.first_name}} {{student.last_name}}"?
         <form action="/" method="POST">
+            {% csrf_token %}
             <input type="hidden" name="id" value="{{student.id}}"/>
             <input type="submit" value="delete"/>
         </form>

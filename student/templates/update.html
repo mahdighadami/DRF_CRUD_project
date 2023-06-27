@@ -17,7 +17,11 @@
         <textarea name="address" rows="5" cols="30">{{ student.address }}</textarea><br><br>
         
         <input type="hidden" name="id" value="{{student.id}}"/>
-        <div><input type="submit" value="Register"/></div>
+        <div><input type="submit" value="Update"/></div>
+
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
 
     </form>
 </div>

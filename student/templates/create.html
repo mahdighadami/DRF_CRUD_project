@@ -1,6 +1,9 @@
 
 {% if not created %}
 <div style="padding: 35%; margin-top: -30%; text-align: center;">
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
     <form action="create" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -18,7 +21,7 @@
         <textarea name="address" rows="5" cols="30"></textarea><br><br>
         
         <div><input type="submit" value="Register"/></div>
-
+        
     </form>
 </div>
 {% else %}

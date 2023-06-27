@@ -24,24 +24,26 @@ def create(request):
 
         if form.is_valid():
 
-            # Recieve data from form and Make model and save it:
-            new_student = Student.objects.create(
-                first_name = request.POST.get("first_name"),
-                last_name = request.POST.get("last_name"),
-                sex = request.POST.get("sex"),
-                grade = request.POST.get("grade"),
-                birth_date = request.POST.get("birth_date"),
-                register_date = request.POST.get("register_date"),
-                graduation_date = request.POST.get("graduation_date"),
-                address = request.POST.get("address"),
-                phone = request.POST.get("phone")
-            )
-            new_student.save()
-            id = new_student.id
-            
+            # Recieve data from form and Make model and save it:            
+            try:    
+                new_student = Student.objects.create(
+                    first_name = request.POST.get("first_name"),
+                    last_name = request.POST.get("last_name"),
+                    sex = request.POST.get("sex"),
+                    grade = request.POST.get("grade"),
+                    birth_date = request.POST.get("birth_date"),
+                    register_date = request.POST.get("register_date"),
+                    graduation_date = request.POST.get("graduation_date"),
+                    address = request.POST.get("address"),
+                    phone = request.POST.get("phone")
+                )
+                new_student.save()
+                context['created'] = True
+                context['id'] = new_student.id
+            except:
+                context['created'] = False
+                context['error'] = 'The phone is already exists!'
 
-            context['created'] = True
-            context['id'] = id
             context['form'] = form
             return render(request, "create.html",  context = context)
         
@@ -69,13 +71,17 @@ def read(request):
         form = ReadForm(request.POST)
         if form.is_valid():
             phone = request.POST.get('phone')
-            student = Student.objects.get(phone = phone)
-            meta_dict = model_to_dict(student, fields=[field.name for field in student._meta.fields])
-            fields = list(meta_dict.keys())
-            values = list(meta_dict.values())
-            context['values'] = values
-            context['fields'] = fields
-            context['student'] = student
+            try:
+                student = Student.objects.get(phone = phone)
+                meta_dict = model_to_dict(student, fields=[field.name for field in student._meta.fields])
+                fields = list(meta_dict.keys())
+                values = list(meta_dict.values())
+                context['values'] = values
+                context['fields'] = fields
+                context['student'] = student
+            except:
+                context['error'] = 'The phone does not exists!'
+
             context['form'] = form
             return render(request, "read.html", context = context)
         
@@ -96,27 +102,34 @@ def update(request):
     if request.method == "POST":
 
         form = StudentForm(request.POST)
-
+        id = request.POST.get('id')
+        student = Student.objects.filter(id = id)
         if form.is_valid():
-            id = request.POST.get('id')
-            student = Student.objects.filter(id = id).update(
-                first_name = request.POST.get("first_name"),
-                last_name = request.POST.get("last_name"),
-                sex = request.POST.get("sex"),
-                grade = request.POST.get("grade"),
-                birth_date = request.POST.get("birth_date"),
-                register_date = request.POST.get("register_date"),
-                graduation_date = request.POST.get("graduation_date"),
-                address = request.POST.get("address"),
-                phone = request.POST.get("phone")
-            )
+            
+            try:
+                student = Student.objects.filter(id = id).update(
+                    first_name = request.POST.get("first_name"),
+                    last_name = request.POST.get("last_name"),
+                    sex = request.POST.get("sex"),
+                    grade = request.POST.get("grade"),
+                    birth_date = request.POST.get("birth_date"),
+                    register_date = request.POST.get("register_date"),
+                    graduation_date = request.POST.get("graduation_date"),
+                    address = request.POST.get("address"),
+                    phone = request.POST.get("phone")
+                )
+                context['updated'] = True
 
-            context['updated'] = True
+            except:
+                context['error'] = 'The input is not valid!'
+                context['form'] = form
+                
             context['student'] = student
             return render(request, "update.html", context = context)
         
         else:
             context['form'] = form
+            context['student'] = student
             return render(request, "update.html", context = context)
     
     else:
@@ -132,6 +145,7 @@ def update(request):
         form = StudentForm(initial=initial)
         context['form'] = form
         context['student'] = student
-
+        
+        
     return render(request, "update.html", context = context)
     
