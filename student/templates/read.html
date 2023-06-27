@@ -1,4 +1,4 @@
-<div style="padding-left: 10%; padding-right: 10%; margin-top: 5%; text-align: center;">
+<div id="form" style="padding-left: 10%; padding-right: 10%; margin-top: 5%; text-align: center;">
     <form action="read" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -6,6 +6,7 @@
     </form>
 </div>
 
+<!--show student data-->
 <div style="padding-left: 20%; padding-right: 20%; margin-top: 10%; text-align: center; ">
     <table>
         <tr>
@@ -21,14 +22,37 @@
     </table>
 </div>
 
+<!--delete and edit button-->
 {% if values %}
 <div style="margin-top: 5%; text-align: center;">
-    <form action="edit" method="GET">
-        <input type="hidden" value="{{values.id}}"/>
+    <form action="update" method="GET">
+        <input type="hidden" name="id" value="{{student.id}}"/>
         <input type="submit" value="edit"/>
     </form>
-    <form action="delete" method="GET">
-        <input type="submit" value="remove"/>
-    </form>
+    <button type="button" onclick="showDiv()">remove</button>
 </div>
 {% endif %}
+
+<!--delete student for sure-->
+<div style="padding-left: 10%; padding-right: 10%; margin-top: 5%; text-align: center;">
+    <div id="deleteDiv" style="display: none;">
+        Are you sure about deleting the student"{{student.first_name}} {{student.last_name}}"?
+        <form action="/" method="POST">
+            <input type="hidden" name="id" value="{{student.id}}"/>
+            <input type="submit" value="delete"/>
+        </form>
+        <button type="button" onclick="hideDiv()">cancel</button>
+    </div>
+</div>
+
+<script>
+function showDiv() {
+    document.getElementById('deleteDiv').style.display = "block";
+    document.getElementById('deleteDiv').scrollIntoView({behavior: 'smooth'}, true);
+}
+function hideDiv() {
+    
+    document.getElementById('deleteDiv').style.display = "none";
+    document.getElementById('form').scrollIntoView({behavior: 'smooth'}, true);
+}
+</script>
