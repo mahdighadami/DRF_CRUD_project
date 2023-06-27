@@ -1,0 +1,13 @@
+
+{% if not created %}
+<div id="registerDiv" style="margin-left: 10%; margin-top: 5%;">
+    <form action="create" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div><input type="submit" value="Register"/></div>
+
+    </form>
+</div>
+{% else %}
+hello
+{% endif %}

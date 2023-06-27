@@ -1,8 +1,6 @@
-<div style="margin-left: 10%; margin-top: 5%;">
-    <form action="." method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div><input type="submit" value="Register"/></div>
-
-    </form>
+<div style="margin-left: 45%; margin-top: 5%;">
+    <form action="create" method="GET"><input type="submit" value="Register"/></form>
+    <form action="read" method="GET"><input type="submit" value="Retrieve"/></form>
+    
 </div>
+
