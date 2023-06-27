@@ -1,13 +1,29 @@
 
 {% if not created %}
-<div id="registerDiv" style="margin-left: 10%; margin-top: 5%;">
+<div id="registerDiv" style="padding: 35%; margin-top: -30%; text-align: center;">
     <form action="create" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+
+        <label>Birth Date: </label>
+        <input type="date" name="birth_date" value="2023-06-01" /><br><br>
+        
+        <label>Register Date: </label>
+        <input type="date" name="register_date" value="2023-06-01" /><br><br>
+        
+        <label>Graduation Date: </label>
+        <input type="date" name="graduation_date" value="2023-06-01" /><br><br>
+        
+        <label>Address: </label>
+        <textarea name="address" rows="5" cols="30"></textarea><br><br>
+        
         <div><input type="submit" value="Register"/></div>
 
     </form>
 </div>
 {% else %}
-hello
+<div id="registerDiv" style="padding: 35%; margin-top: -30%; text-align: center;">
+    <p>thanks; your ID is: {{ id }}</p> 
+</div>
+ 
 {% endif %}
