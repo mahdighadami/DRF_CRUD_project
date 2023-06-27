@@ -1,0 +1,29 @@
+{% if not updated %}
+<div style="padding: 35%; margin-top: -30%; text-align: center;">
+    <form action="update" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <label>Birth Date: </label>
+        <input type="date" name="birth_date" value="{{ student.birth_date }}" /><br><br>
+        
+        <label>Register Date: </label>
+        <input type="date" name="register_date" value="{{ student.register_date }}" /><br><br>
+        
+        <label>Graduation Date: </label>
+        <input type="date" name="graduation_date" value="{{ student.graduation_date }}" /><br><br>
+        
+        <label>Address: </label>
+        <textarea name="address" rows="5" cols="30">{{ student.address }}</textarea><br><br>
+        
+        <input type="hidden" name="id" value="{{student.id}}"/>
+        <div><input type="submit" value="Register"/></div>
+
+    </form>
+</div>
+{% else %}
+<div style="padding: 35%; margin-top: -30%; text-align: center;">
+    <p>thanks; your ID is: {{ student.id }}</p> 
+</div>
+ 
+{% endif %}
