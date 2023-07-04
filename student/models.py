@@ -23,3 +23,6 @@ class Student(models.Model):
     graduation_date = models.DateField()
     address = models.TextField()
     phone = PhoneNumberField(null=False, blank=False, unique=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
