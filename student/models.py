@@ -19,7 +19,7 @@ class Student(models.Model):
     sex = models.CharField(max_length=7, choices=SEX_CHOICES)
     birth_date = models.DateField()
     grade = models.CharField(max_length=9, choices=GRADE_CHOICES)
-    register_date = models.DateField(auto_now_add=True)
+    register_date = models.DateField()
     graduation_date = models.DateField()
     address = models.TextField()
     phone = PhoneNumberField(null=False, blank=False, unique=True)
