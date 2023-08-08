@@ -1,5 +1,6 @@
-# project01
-## Student's Data Base
+# Django Rest Framework Project
+## Student's Database
+handling CRUD operations on MySQL database 
 
 ### pip freeze(requirements): 
 * Django==4.2.2
